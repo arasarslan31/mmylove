@@ -1,26 +1,47 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>❤️</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>❤️</title>
 
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  background: black;
-  <img src="IMG-20251225-WA0008.jpg">
-  <img src="IMG-20251225-WA0007.jpg">
-  <img src="IMG-20251225-WA0004.jpg">
-  <img src="IMG-20251225-WA0003.jpg">
-  <img src="thevampirediaries7360-20251225-0001.jpg">
-  <img src="Screenshot_2025-12-24-22-01-18-320_com.miui.gallery.jpg">
-  <img src="IMG-20251225-WA0005.jpg">
-}
+    body {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      background: black;
+    }
 
-.section {
-  height:
+    .slide {
+      height: 100vh;
+      scroll-snap-align: start;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="slide"><img src="IMG-20251225-WA0008.jpg"></div>
+  <div class="slide"><img src="IMG-20251225-WA0007.jpg"></div>
+  <div class="slide"><img src="IMG-20251225-WA0004.jpg"></div>
+  <div class="slide"><img src="IMG-20251225-WA0003.jpg"></div>
+  <div class="slide"><img src="thevampirediaries7360-20251225-0001.jpg"></div>
+  <div class="slide"><img src="Screenshot_2025-12-24-22-01-18-320_com.miui.gallery.jpg"></div>
+  <div class="slide"><img src="IMG-20251225-WA0005.jpg"></div>
+
+</body>
+</html>
