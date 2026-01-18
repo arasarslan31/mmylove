@@ -13,7 +13,7 @@
     }
 
     body {
-      /* Hafif degrade arka plan, saf siyah yerine koyu gri tonlar */
+      /* Hafif degrade arka plan */
       background: linear-gradient(to bottom, #0a0a0a, #111111);
       height: 100vh;
       overflow-y: scroll;
@@ -120,7 +120,7 @@
   <div class="slide"><img src="IMG_20260118_142045.jpg"></div>
   <div class="slide"><img src="IMG_20260118_142014.jpg"></div>
 
-  <!-- JS (iPhone ve Android uyumlu) -->
+  <!-- JS -->
   <script>
     const touchScreen = document.getElementById("touch-screen");
     const audio = document.getElementById("bg-music");
@@ -155,23 +155,29 @@
     touchScreen.addEventListener("click", startSite);
     touchScreen.addEventListener("touchstart", startSite);
 
-    // Scroll sonrası en yakın slide'a snap
+    // TEK SLIDE GEÇİŞİ (hızlı kaydırmada bile sadece bir sonraki slide)
     let isScrolling;
+    let lastScroll = 0;
+
     window.addEventListener('scroll', () => {
       window.clearTimeout(isScrolling);
       isScrolling = setTimeout(() => {
         const slides = document.querySelectorAll('.slide');
-        let closest = slides[0];
-        let closestDist = Math.abs(slides[0].getBoundingClientRect().top);
-        slides.forEach(slide => {
-          const dist = Math.abs(slide.getBoundingClientRect().top);
-          if(dist < closestDist) {
-            closest = slide;
-            closestDist = dist;
-          }
+        const direction = window.scrollY > lastScroll ? 1 : -1; // aşağı mı yukarı mı
+        lastScroll = window.scrollY;
+
+        // En yakın slide indexi
+        const currentIndex = Array.from(slides).findIndex(slide => {
+          const rect = slide.getBoundingClientRect();
+          return rect.top >= -window.innerHeight/2 && rect.top < window.innerHeight/2;
         });
-        closest.scrollIntoView({behavior: 'smooth'});
-      }, 80);
+
+        let nextIndex = currentIndex + direction;
+        if(nextIndex < 0) nextIndex = 0;
+        if(nextIndex >= slides.length) nextIndex = slides.length - 1;
+
+        slides[nextIndex].scrollIntoView({behavior: 'smooth'});
+      }, 50);
     });
 
     // Parallax ve blur efektleri
