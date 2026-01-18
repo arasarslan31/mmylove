@@ -35,6 +35,12 @@
       height: 100%;
       object-fit: contain; /* kesilmez */
       border-radius: 16px;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .slide img.visible {
+      opacity: 1;
     }
 
     /* DOKUN EKRANI */
@@ -50,6 +56,7 @@
       font-weight: bold;
       z-index: 9999;
       cursor: pointer;
+      transition: opacity 0.6s ease;
     }
 
     @media (max-width: 768px) {
@@ -68,11 +75,10 @@
 
   <!-- MÜZİK -->
   <audio id="bg-music" loop preload="auto">
-  <source src="musicmarlboro.m4a" type="audio/mp4">
-</audio>
+    <source src="musicmarlboro.m4a" type="audio/mp4">
+  </audio>
 
   <!-- DOKUN -->
-  
   <div id="touch-screen">DOKUN!</div>
 
   <!-- FOTOĞRAFLAR -->
@@ -91,43 +97,42 @@
   <div class="slide"><img src="IMG_20260118_142045.jpg"></div>
   <div class="slide"><img src="IMG_20260118_142014.jpg"></div>
 
-  <!-- JS (iPhone uyumlu) -->
+  <!-- JS (iPhone ve Android uyumlu) -->
   <script>
-  const touchScreen = document.getElementById("touch-screen");
-  const audio = document.getElementById("bg-music");
+    const touchScreen = document.getElementById("touch-screen");
+    const audio = document.getElementById("bg-music");
 
-  audio.volume = 0.3;
-  audio.setAttribute("playsinline", "");
+    audio.volume = 0.3;
+    audio.setAttribute("playsinline", "");
 
-  touchScreen.addEventListener("click", () => {
-    // play promise yakalama
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          // Başarılıysa ekran kalksın
-          touchScreen.style.display = "none";
-        })
-        .catch((error) => {
-          console.log("Audio çalınamadı, tekrar dene", error);
-        });
-    } else {
-      touchScreen.style.display = "none";
+    function showPhotos() {
+      document.querySelectorAll('.slide img').forEach(img => img.classList.add('visible'));
     }
-  });
 
-  // Android bazı durumlarda touchstart gerekebilir
-  touchScreen.addEventListener("touchstart", () => {
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => touchScreen.style.display = "none")
-        .catch(() => {});
-    } else {
-      touchScreen.style.display = "none";
+    function startSite() {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Dokun ekranı fade out
+            touchScreen.style.opacity = 0;
+            setTimeout(() => {
+              touchScreen.style.display = "none";
+              showPhotos(); // Fotoğrafları görünür yap
+            }, 600); // fade süresi ile eşleşir
+          })
+          .catch((error) => {
+            console.log("Audio çalınamadı", error);
+          });
+      } else {
+        touchScreen.style.display = "none";
+        showPhotos();
+      }
     }
-  });
-</script>
+
+    touchScreen.addEventListener("click", startSite);
+    touchScreen.addEventListener("touchstart", startSite);
+  </script>
 
 </body>
 </html>
