@@ -8,6 +8,26 @@
   <style>
     * {
       box-sizing: border-box;
+      <style>
+  body {
+    margin: 0;
+    background: black;
+  }
+
+  #touch-screen {
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: white;
+    font-size: 48px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    cursor: pointer;
+  }
+</style>
     }
 
     body {
@@ -45,6 +65,10 @@
 <audio id="bg-music" loop>
   <source src="/storage/emulated/0/Music/Lonely God - Marlboro Nights (Official Music Video)(_73QwEybeBjE_).m4a" type="audio/mpeg">
 </audio>
+
+<div id="touch-screen">
+  DOKUN!
+</div>
   <div class="slide"> <img src="IMG_20260118_171908.png"> </div>
   <div class="slide"> <img src="IMG_20260118_172008.jpg"> </div>
   <div class="slide"> <img src="IMG_20260118_143717.png"> </div>
