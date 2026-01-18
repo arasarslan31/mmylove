@@ -85,16 +85,13 @@
   <div class="slide"> <img src="IMG_20260118_142014.jpg"> </div>
 <script>
   const audio = document.getElementById("bg-music");
-  audio.volume = 0.3;
+  const screen = document.getElementById("touch-screen");
 
-  function startMusic() {
-    audio.play().catch(() => {});
-    document.removeEventListener("touchstart", startMusic);
-    document.removeEventListener("click", startMusic);
-  }
-
-  document.addEventListener("touchstart", startMusic);
-  document.addEventListener("click", startMusic);
+  screen.addEventListener("click", () => {
+    audio.volume = 0.3;
+    audio.play();
+    screen.remove();
+  });
 </script>
 </body>
 </html>
