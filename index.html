@@ -16,7 +16,10 @@
 
   #touch-screen {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background: black;
     color: white;
     font-size: 48px;
@@ -25,39 +28,8 @@
     align-items: center;
     justify-content: center;
     z-index: 99999;
-    cursor: pointer;
   }
 </style>
-    }
-
-    body {
-      margin: 0;
-      background: black;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-    }
-
-    .slide {
-      min-height: 100vh;
-      scroll-snap-align: start;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px; /* 👈 KENAR BOŞLUK */
-    }
-
-    .slide img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain; /* 👈 KESME YOK */
-      border-radius: 12px;
-    }
-
-    @media (max-width: 768px) {
-      .slide {
-        padding: 20px;
-      }
-    }
   </style>
 </head>
 
@@ -90,7 +62,7 @@
   screen.addEventListener("click", () => {
     audio.volume = 0.3;
     audio.play();
-    screen.remove();
+    screen.style.display = "none";
   });
 </script>
 </body>
