@@ -72,7 +72,8 @@
   </audio>
 
   <!-- DOKUN -->
-  <div id="touch-screen">DOKUN!</div>
+  
+  <div id="touch-screen" onclick="startSite()">DOKUN!</div>
 
   <!-- FOTOĞRAFLAR -->
   <div class="slide"><img src="IMG_20260118_171908.png"></div>
@@ -92,20 +93,15 @@
 
   <!-- JS (iPhone uyumlu) -->
   <script>
-    const touchScreen = document.getElementById("touch-screen");
-    const audio = document.getElementById("bg-music");
+  const audio = document.getElementById("bg-music");
 
-    audio.volume = 0.3;
+  audio.volume = 0.3;
+  audio.setAttribute("playsinline", "");
 
-    function startSite() {
-      audio.play().catch(() => {});
-      touchScreen.style.display = "none";
-      document.removeEventListener("click", startSite);
-      document.removeEventListener("touchstart", startSite);
-    }
-
-    document.addEventListener("click", startSite);
-    document.addEventListener("touchstart", startSite);
+  function startSite() {
+    audio.play();
+    document.getElementById("touch-screen").style.display = "none";
+  }
   </script>
 
 </body>
