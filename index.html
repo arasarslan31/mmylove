@@ -13,7 +13,8 @@
     }
 
     body {
-      background: linear-gradient(to bottom, #000000, #111111); /* hafif degrade */
+      /* Hafif degrade arka plan, saf siyah yerine koyu gri tonlar */
+      background: linear-gradient(to bottom, #0a0a0a, #111111);
       height: 100vh;
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
@@ -38,7 +39,7 @@
       height: 100%;
       object-fit: contain;
       border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6); /* hafif gölge */
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
       opacity: 0;
       transition: opacity 0.8s ease, transform 0.5s ease, filter 0.5s ease;
       transform: translateY(0px) scale(0.95);
@@ -65,13 +66,20 @@
       z-index: 9999;
       cursor: pointer;
       transition: opacity 0.6s ease;
-      animation: pulse 1.2s infinite;
+      animation: pulse 1.2s infinite, glow 2s infinite alternate;
+      text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5);
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
+    }
+
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3); }
+      50% { text-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.5); }
+      100% { text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3); }
     }
 
     @media (max-width: 768px) {
