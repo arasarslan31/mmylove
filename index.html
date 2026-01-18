@@ -3,98 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Love</title>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  <title>❤️</title>
 
-  body {
-    height: 100vh;
-    background: black;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
-  }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  .slide {
-    height: 100vh;
-    scroll-snap-align: start;
-    padding: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+    body {
+      background: black;
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      font-family: Arial, sans-serif;
+    }
 
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 16px;
-  }
-
-  /* DOKUN EKRANI */
-  #touch-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: black;
-    color: white;
-    font-size: 48px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 99999;
-    cursor: pointer;
-  }
-
-  @media (max-width: 768px) {
+    /* SLIDE */
     .slide {
-      padding: 20px;
+      height: 100vh;
+      scroll-snap-align: start;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    #touch-screen {
-      font-size: 36px;
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* kesilmez */
+      border-radius: 16px;
     }
-  }
-</style>
+
+    /* DOKUN EKRANI */
+    #touch-screen {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 56px;
+      font-weight: bold;
+      z-index: 9999;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .slide {
+        padding: 20px;
+      }
+
+      #touch-screen {
+        font-size: 40px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<audio id="bg-music" loop>
-  <source src="/storage/emulated/0/Music/Lonely God - Marlboro Nights (Official Music Video)(_73QwEybeBjE_).m4a" type="audio/mpeg">
-</audio>
 
-<div id="touch-screen">
-  DOKUN!
-</div>
-  <div class="slide"> <img src="IMG_20260118_171908.png"> </div>
-  <div class="slide"> <img src="IMG_20260118_172008.jpg"> </div>
-  <div class="slide"> <img src="IMG_20260118_143717.png"> </div>
-  <div class="slide"> <img src="IMG_20260118_141905.jpg"> </div>
-  <div class="slide"> <img src="IMG-20250916-WA0001.jpg"> </div>
-  <div class="slide"> <img src="IMG_20260118_165449.jpg"> </div>
-  <div class="slide"> <img src="IMG-20260118-WA0008.jpg"> </div>
-  <div class="slide"> <img src="IMG_20260118_142000.jpg"> </div>
-  <div class="slide"> <img src="IMG_20260118_181519.jpg"> </div>
-  <div class="slide"> <img src="IMG_20260118_143243.png"> </div>
-  <div class="slide"> <img src="IMG_20260118_143216.jpg"> </div>
-  <div class="slide"> <img src="1768735623851.png"> </div>
-  <div class="slide"> <img src="IMG_20260118_142045.jpg"> </div>
-  <div class="slide"> <img src="IMG_20260118_142014.jpg"> </div>
-<script>
-  const audio = document.getElementById("bg-music");
-  const screen = document.getElementById("touch-screen");
+  <!-- MÜZİK -->
+  <audio id="bg-music" loop>
+    <source src="musicmarlboro.m4a" type="audio/mp4">
+  </audio>
 
-  screen.addEventListener("click", () => {
+  <!-- DOKUN -->
+  <div id="touch-screen">DOKUN!</div>
+
+  <!-- FOTOĞRAFLAR -->
+  <div class="slide"><img src="IMG_20260118_171908.png"></div>
+  <div class="slide"><img src="IMG_20260118_172008.jpg"></div>
+  <div class="slide"><img src="IMG_20260118_143717.png"></div>
+  <div class="slide"><img src="IMG_20260118_141905.jpg"></div>
+  <div class="slide"><img src="IMG-20250916-WA0001.jpg"></div>
+  <div class="slide"><img src="IMG_20260118_165449.jpg"></div>
+  <div class="slide"><img src="IMG-20260118-WA0008.jpg"></div>
+  <div class="slide"><img src="IMG_20260118_142000.jpg"></div>
+  <div class="slide"><img src="IMG_20260118_181519.jpg"></div>
+  <div class="slide"><img src="IMG_20260118_143243.png"></div>
+  <div class="slide"><img src="IMG_20260118_143216.jpg"></div>
+  <div class="slide"><img src="1768735623851.png"></div>
+  <div class="slide"><img src="IMG_20260118_142045.jpg"></div>
+  <div class="slide"><img src="IMG_20260118_142014.jpg"></div>
+
+  <!-- JS (iPhone uyumlu) -->
+  <script>
+    const touchScreen = document.getElementById("touch-screen");
+    const audio = document.getElementById("bg-music");
+
     audio.volume = 0.3;
-    audio.play();
-    screen.style.display = "none";
-  });
-</script>
+
+    function startSite() {
+      audio.play().catch(() => {});
+      touchScreen.style.display = "none";
+      document.removeEventListener("click", startSite);
+      document.removeEventListener("touchstart", startSite);
+    }
+
+    document.addEventListener("click", startSite);
+    document.addEventListener("touchstart", startSite);
+  </script>
+
 </body>
 </html>
