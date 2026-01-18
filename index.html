@@ -36,13 +36,11 @@
       object-fit: contain; /* kesilmez */
       border-radius: 16px;
       opacity: 0;
-      transition: opacity 0.8s ease, transform 0.5s ease;
-      transform: scale(0.95);
+      transition: opacity 0.8s ease;
     }
 
     .slide img.visible {
       opacity: 1;
-      transform: scale(1);
     }
 
     /* DOKUN EKRANI */
@@ -116,12 +114,11 @@
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
-            // Dokun ekranı fade out
             touchScreen.style.opacity = 0;
             setTimeout(() => {
               touchScreen.style.display = "none";
-              showPhotos(); // Fotoğrafları görünür yap
-            }, 600); // fade süresi ile eşleşir
+              showPhotos();
+            }, 600);
           })
           .catch((error) => {
             console.log("Audio çalınamadı", error);
@@ -134,17 +131,6 @@
 
     touchScreen.addEventListener("click", startSite);
     touchScreen.addEventListener("touchstart", startSite);
-
-    // Scroll ile fotoğraflara küçük scale efekti
-    const slides = document.querySelectorAll('.slide img');
-    window.addEventListener('scroll', () => {
-      slides.forEach(slide => {
-        const rect = slide.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const distance = Math.min(Math.max((rect.top / windowHeight), 0), 1);
-        slide.style.transform = `scale(${0.95 + 0.05*(1-distance)})`;
-      });
-    });
   </script>
 
 </body>
