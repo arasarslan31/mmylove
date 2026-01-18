@@ -67,13 +67,13 @@
 <body>
 
   <!-- MÜZİK -->
-  <audio id="bg-music" loop>
-    <source src="musicmarlboro.m4a" type="audio/mp4">
-  </audio>
+  <audio id="bg-music" loop preload="auto">
+  <source src="musicmarlboro.m4a" type="audio/mp4">
+</audio>
 
   <!-- DOKUN -->
   
-  <div id="touch-screen" onclick="startSite()">DOKUN!</div>
+  <div id="touch-screen">DOKUN!</div>
 
   <!-- FOTOĞRAFLAR -->
   <div class="slide"><img src="IMG_20260118_171908.png"></div>
@@ -93,16 +93,41 @@
 
   <!-- JS (iPhone uyumlu) -->
   <script>
+  const touchScreen = document.getElementById("touch-screen");
   const audio = document.getElementById("bg-music");
 
   audio.volume = 0.3;
   audio.setAttribute("playsinline", "");
 
-  function startSite() {
-    audio.play();
-    document.getElementById("touch-screen").style.display = "none";
-  }
-  </script>
+  touchScreen.addEventListener("click", () => {
+    // play promise yakalama
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          // Başarılıysa ekran kalksın
+          touchScreen.style.display = "none";
+        })
+        .catch((error) => {
+          console.log("Audio çalınamadı, tekrar dene", error);
+        });
+    } else {
+      touchScreen.style.display = "none";
+    }
+  });
+
+  // Android bazı durumlarda touchstart gerekebilir
+  touchScreen.addEventListener("touchstart", () => {
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => touchScreen.style.display = "none")
+        .catch(() => {});
+    } else {
+      touchScreen.style.display = "none";
+    }
+  });
+</script>
 
 </body>
 </html>
