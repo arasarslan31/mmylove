@@ -13,10 +13,12 @@
     }
 
     body {
-      background: black;
+      background: linear-gradient(to bottom, #000000, #111111); /* hafif degrade */
       height: 100vh;
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      overscroll-behavior-y: contain;
       font-family: Arial, sans-serif;
     }
 
@@ -28,19 +30,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
 
     .slide img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* kesilmez */
+      object-fit: contain;
       border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6); /* hafif gölge */
       opacity: 0;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.8s ease, transform 0.5s ease, filter 0.5s ease;
+      transform: translateY(0px) scale(0.95);
+      filter: blur(2px);
     }
 
     .slide img.visible {
       opacity: 1;
+      transform: translateY(0px) scale(1);
+      filter: blur(0);
     }
 
     /* DOKUN EKRANI */
@@ -57,6 +65,13 @@
       z-index: 9999;
       cursor: pointer;
       transition: opacity 0.6s ease;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     @media (max-width: 768px) {
@@ -131,6 +146,37 @@
 
     touchScreen.addEventListener("click", startSite);
     touchScreen.addEventListener("touchstart", startSite);
+
+    // Scroll sonrası en yakın slide'a snap
+    let isScrolling;
+    window.addEventListener('scroll', () => {
+      window.clearTimeout(isScrolling);
+      isScrolling = setTimeout(() => {
+        const slides = document.querySelectorAll('.slide');
+        let closest = slides[0];
+        let closestDist = Math.abs(slides[0].getBoundingClientRect().top);
+        slides.forEach(slide => {
+          const dist = Math.abs(slide.getBoundingClientRect().top);
+          if(dist < closestDist) {
+            closest = slide;
+            closestDist = dist;
+          }
+        });
+        closest.scrollIntoView({behavior: 'smooth'});
+      }, 80);
+    });
+
+    // Parallax ve blur efektleri
+    window.addEventListener('scroll', () => {
+      const slides = document.querySelectorAll('.slide img');
+      slides.forEach(img => {
+        const rect = img.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const offset = (rect.top - windowHeight/2) / windowHeight;
+        img.style.transform = `translateY(${offset * 20}px) scale(1)`;
+        img.style.filter = `blur(${Math.abs(offset) * 2}px)`;
+      });
+    });
   </script>
 
 </body>
