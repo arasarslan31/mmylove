@@ -13,7 +13,7 @@
     }
 
     body {
-      background: linear-gradient(to bottom, #0a0a0a, #111111);  /* canlı doğum günü degrade */ 
+      background: linear-gradient(to bottom, #0a0a0a, #111111);
       height: 100vh;
       overflow-y: scroll;
       scroll-snap-type: y proximity;
@@ -52,7 +52,7 @@
     #touch-screen {
       position: fixed;
       inset: 0;
-      background: transparent; /* saydam yaptık, degrade görülsün */
+      background: black;
       color: white;
       display: flex;
       align-items: center;
@@ -64,22 +64,6 @@
       transition: opacity 0.6s ease;
       animation: pulse 1.2s infinite, glow 2s infinite alternate;
       text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5);
-    }
-
-    #birthday-message {
-      position: fixed;
-      inset: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 64px;
-      font-weight: bold;
-      color: #ff0066;
-      text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 9998;
-      transition: opacity 1s ease;
     }
 
     @keyframes pulse {
@@ -102,10 +86,6 @@
       #touch-screen {
         font-size: 40px;
       }
-
-      #birthday-message {
-        font-size: 40px;
-      }
     }
   </style>
 </head>
@@ -116,8 +96,8 @@
     <source src="musicmarlboro.m4a" type="audio/mp4">
   </audio>
 
-  <div id="touch-screen">DOKUN!</div>
-  <div id="birthday-message">DOĞUM GÜNÜN KUTLU OLSUN!</div>
+  <div id="touch-screen">DOĞUM GÜNÜN KUTLU OLSUN DOKUN 🎉🥳🎈 </div>
+   <div id="touch-screen">DOKUN! </div>
 
   <div class="slide"><img src="IMG_20260118_171908.png"></div>
   <div class="slide"><img src="IMG_20260118_172008.jpg"></div>
@@ -136,7 +116,6 @@
 
   <script>
     const touchScreen = document.getElementById("touch-screen");
-    const birthdayMessage = document.getElementById("birthday-message");
     const audio = document.getElementById("bg-music");
 
     audio.volume = 0.3;
@@ -147,39 +126,6 @@
         .forEach(img => img.classList.add('visible'));
     }
 
-    function startBirthday() {
-      birthdayMessage.style.opacity = 1;
-
-      // Basit konfeti efekti
-      for(let i=0; i<150; i++){
-        const confetti = document.createElement('div');
-        confetti.style.position = 'fixed';
-        confetti.style.width = '10px';
-        confetti.style.height = '10px';
-        confetti.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 60%)`;
-        confetti.style.left = Math.random() * window.innerWidth + 'px';
-        confetti.style.top = Math.random() * -window.innerHeight + 'px';
-        confetti.style.borderRadius = '50%';
-        confetti.style.zIndex = 9997;
-        confetti.style.opacity = Math.random();
-        confetti.style.pointerEvents = 'none';
-        document.body.appendChild(confetti);
-
-        const speed = 2 + Math.random()*3;
-        let top = parseFloat(confetti.style.top);
-        const fall = () => {
-          top += speed;
-          confetti.style.top = top + 'px';
-          if(top < window.innerHeight){
-            requestAnimationFrame(fall);
-          } else {
-            confetti.remove();
-          }
-        }
-        fall();
-      }
-    }
-
     function startSite() {
       const playPromise = audio.play();
       if (playPromise !== undefined) {
@@ -188,7 +134,6 @@
           setTimeout(() => {
             touchScreen.style.display = "none";
             showPhotos();
-            startBirthday();
           }, 600);
         }).catch((error) => {
           console.log("Audio çalınamadı", error);
@@ -196,7 +141,6 @@
       } else {
         touchScreen.style.display = "none";
         showPhotos();
-        startBirthday();
       }
     }
 
