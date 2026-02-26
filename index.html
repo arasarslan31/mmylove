@@ -13,17 +13,14 @@
     }
 
     body {
-      /* Hafif degrade arka plan */
       background: linear-gradient(to bottom, #0a0a0a, #111111);
       height: 100vh;
       overflow-y: scroll;
       scroll-snap-type: y proximity;
-      scroll-behavior: smooth;
-      overscroll-behavior-y: contain;
+      overscroll-behavior: none;
       font-family: Arial, sans-serif;
     }
 
-    /* SLIDE */
     .slide {
       height: 100vh;
       scroll-snap-align: start;
@@ -52,7 +49,6 @@
       filter: blur(0);
     }
 
-    /* DOKUN EKRANI */
     #touch-screen {
       position: fixed;
       inset: 0;
@@ -96,15 +92,12 @@
 
 <body>
 
-  <!-- MÜZİK -->
   <audio id="bg-music" loop preload="auto">
     <source src="musicmarlboro.m4a" type="audio/mp4">
   </audio>
 
-  <!-- DOKUN -->
   <div id="touch-screen">DOKUN!</div>
 
-  <!-- FOTOĞRAFLAR -->
   <div class="slide"><img src="IMG_20260118_171908.png"></div>
   <div class="slide"><img src="IMG_20260118_172008.jpg"></div>
   <div class="slide"><img src="IMG_20260118_143717.png"></div>
@@ -120,7 +113,6 @@
   <div class="slide"><img src="IMG_20260118_142045.jpg"></div>
   <div class="slide"><img src="IMG_20260118_142014.jpg"></div>
 
-  <!-- JS -->
   <script>
     const touchScreen = document.getElementById("touch-screen");
     const audio = document.getElementById("bg-music");
@@ -129,23 +121,22 @@
     audio.setAttribute("playsinline", "");
 
     function showPhotos() {
-      document.querySelectorAll('.slide img').forEach(img => img.classList.add('visible'));
+      document.querySelectorAll('.slide img')
+        .forEach(img => img.classList.add('visible'));
     }
 
     function startSite() {
       const playPromise = audio.play();
       if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            touchScreen.style.opacity = 0;
-            setTimeout(() => {
-              touchScreen.style.display = "none";
-              showPhotos();
-            }, 600);
-          })
-          .catch((error) => {
-            console.log("Audio çalınamadı", error);
-          });
+        playPromise.then(() => {
+          touchScreen.style.opacity = 0;
+          setTimeout(() => {
+            touchScreen.style.display = "none";
+            showPhotos();
+          }, 600);
+        }).catch((error) => {
+          console.log("Audio çalınamadı", error);
+        });
       } else {
         touchScreen.style.display = "none";
         showPhotos();
@@ -155,17 +146,7 @@
     touchScreen.addEventListener("click", startSite);
     touchScreen.addEventListener("touchstart", startSite);
 
-    // TEK SLIDE GEÇİŞİ (hızlı kaydırmada bile sadece bir sonraki slide)
-   
-        let nextIndex = currentIndex + direction;
-        if(nextIndex < 0) nextIndex = 0;
-        if(nextIndex >= slides.length) nextIndex = slides.length - 1;
-
-        slides[nextIndex].scrollIntoView({behavior: 'smooth'});
-      }, 50);
-    });
-
-    // Parallax ve blur efektleri
+    // Parallax ve blur efektleri (sadece görsel efekt, kaydırma yaptırmaz)
     window.addEventListener('scroll', () => {
       const slides = document.querySelectorAll('.slide img');
       slides.forEach(img => {
