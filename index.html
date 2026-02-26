@@ -6,11 +6,7 @@
   <title>❤️</title>
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       background: linear-gradient(to bottom, #0a0a0a, #111111);
@@ -79,13 +75,8 @@
     }
 
     @media (max-width: 768px) {
-      .slide {
-        padding: 20px;
-      }
-
-      #touch-screen {
-        font-size: 40px;
-      }
+      .slide { padding: 20px; }
+      #touch-screen { font-size: 40px; }
     }
   </style>
 </head>
@@ -121,8 +112,7 @@
     audio.setAttribute("playsinline", "");
 
     function showPhotos() {
-      document.querySelectorAll('.slide img')
-        .forEach(img => img.classList.add('visible'));
+      document.querySelectorAll('.slide img').forEach(img => img.classList.add('visible'));
     }
 
     function startSite() {
@@ -146,15 +136,18 @@
     touchScreen.addEventListener("click", startSite);
     touchScreen.addEventListener("touchstart", startSite);
 
-    // Parallax ve blur efektleri (sadece görsel efekt, kaydırma yaptırmaz)
+    // Parallax ve blur efektleri sadece görünür slidelara
     window.addEventListener('scroll', () => {
       const slides = document.querySelectorAll('.slide img');
+      const windowHeight = window.innerHeight;
+
       slides.forEach(img => {
         const rect = img.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const offset = (rect.top - windowHeight/2) / windowHeight;
-        img.style.transform = `translateY(${offset * 20}px) scale(1)`;
-        img.style.filter = `blur(${Math.abs(offset) * 2}px)`;
+        if (rect.bottom > 0 && rect.top < windowHeight) { // ekranda mı kontrolü
+          const offset = (rect.top - windowHeight/2) / windowHeight;
+          img.style.transform = `translateY(${offset * 20}px) scale(1)`;
+          img.style.filter = `blur(${Math.abs(offset) * 2}px)`;
+        }
       });
     });
   </script>
