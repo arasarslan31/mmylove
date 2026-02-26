@@ -156,22 +156,7 @@
     touchScreen.addEventListener("touchstart", startSite);
 
     // TEK SLIDE GEÇİŞİ (hızlı kaydırmada bile sadece bir sonraki slide)
-    let isScrolling;
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-      window.clearTimeout(isScrolling);
-      isScrolling = setTimeout(() => {
-        const slides = document.querySelectorAll('.slide');
-        const direction = window.scrollY > lastScroll ? 1 : -1; // aşağı mı yukarı mı
-        lastScroll = window.scrollY;
-
-        // En yakın slide indexi
-        const currentIndex = Array.from(slides).findIndex(slide => {
-          const rect = slide.getBoundingClientRect();
-          return rect.top >= -window.innerHeight/2 && rect.top < window.innerHeight/2;
-        });
-
+   
         let nextIndex = currentIndex + direction;
         if(nextIndex < 0) nextIndex = 0;
         if(nextIndex >= slides.length) nextIndex = slides.length - 1;
